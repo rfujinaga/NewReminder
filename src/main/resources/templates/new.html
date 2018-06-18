@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>新規リマインド登録</title>
+  <meta charset="UTF-8">
+  
+  <!-- CSS -->
+<link rel="stylesheet" href="/css/design.css" th:href="@{/css/design.css}">
+</head>
+
+<body>
+  <h1>新規登録</h1>
+ <p class="hissutitle"><span class="hissu">*</span>は入力必須項目</p>
+  
+  <!-- 登録項目作成 -->
+<form method="post" th:action="@{/post}">
+
+  <p>登録サイト<span class="hissu">*</span></p>
+	<input type="text" name="s_name" maxlength="20" placeholder="登録サイト名" required></input><br>
+  
+  <p>登録日<span class="hissu">*</span></p>
+  <input type="date" name="r_date" required></input>
+
+  <p>無料期間終了日<span class="hissu">*</span></p>
+  <input type="date" name="t_period" required></input>
+
+  <p>登録したメールアドレス</p>
+	<input type="email" name="mailaddress" maxlength="100" placeholder="メールアドレス"></input><br>
+  
+	<p>カードブランド</p>
+  <div>
+  <input name="card_bra" type="radio" value="VISA"> VISA
+	<input name="card_bra" type="radio" value="Master Card"> Master Card
+	<input name="card_bra" type="radio" value="JCB"> JCB<br>
+	<input name="card_bra" type="radio" value="American Express"> American Express
+	<input name="card_bra" type="radio" value="Diners Club"> Diners Club 
+	<input name="card_bra" type="radio" value="DISCOVER"> DISCOVER
+	<input name="card_bra" type="radio" value="銀聯"> 銀聯
+	</div>
+	
+  <p>カード番号(半角16桁)</p>
+	<input type="text" name="card_num" maxlength="16" placeholder="カード番号"></input><br>
+  
+  <p>ID(別途設定した場合)</p>
+	<input type="text" name="s_id" maxlength="20" placeholder="ID"></input><br>
+  
+  <p>パスワード</p>
+	<input type="text" name="password" maxlength="20" placeholder="パスワード"></input><br>
+  
+  <p>備考(200文字まで)</p>
+  <textarea name="other" cols="40" rows="5" maxlength="200" placeholder="その他メモなど"></textarea><br>
+
+  <br>
+  <input class="button" type="submit" value="・登録・">
+  
+</form>
+
+  
+</body>
+</html>
