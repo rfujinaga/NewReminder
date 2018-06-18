@@ -17,26 +17,46 @@
 <th>サイト名</th>
 <th>契約日</th>
 <th>無料期間終了日</th>
-<th>詳細</th>
+<th class="delete">残日数</th>
+<th class="delete">詳細</th>
 <th class="delete">削除</th>
 </tr>
 
 
 <tr th:each ="service:${data}">
-<td class="listtd"><span th:text="${service.s_name}">ここにサイト名が入ります</span></td>
-<td class="listtd"><span th:text="${service.r_date}">ここに契約日が入ります</span></td>
-<td class="listtd"><span th:text="${service.t_period}">ここに無料期間終了日が入ります</span></td>
+<td class="listtd"><span th:text="${service.s_name}"></span></td>
+<td class="listtd"><span th:text="${service.r_date}"></span></td>
+<td class="listtd"><span th:text="${service.t_period}"></span></td>
+
+
+<td class="listtd">
+<script th:inline="javascript">
+/*<![CDATA[*/
+
+var today = new Date();
+
+var period = new Date (/*[[${service.t_period}]]*/) ;
+
+var day = Math.ceil((period-today)/(60*60*24*1000));
+
+document.write("残"+day+"日");
+/*]]>*/
+</script>
+</td>
+
+
 <td class="listtd"><a th:href="@{/detail/{id}(id=${service.id})}"><button class="detailbutton" type="submit"  th:value="${service.id}" name="moving">詳細</button></a></td>
+<td class="listtd">
 
 <form method="post" th:action="@{/delete}">
-<td class="deletetd"><input type="checkbox" th:value="${service.id}"></td>
+<button class="right" type="submit" th:value="${service.id}" name="id">削除</button>
+</form>
+</td>
 </tr>
 
 </table>
 
-  <a class="button" href = "top" >・TOPへ・</a> <!-- <a href="list" class="right" method="post" th:action="@{/list}">削除</a>-->
+  <a class="button" href = "top" >・TOPへ・</a>
 
-<input class="button" type="submit" value="・削除・">
-</form>
 </body>
 </html>

@@ -24,7 +24,7 @@ pattern {
 
 h1 {
 	padding: 30px;
-	font-size:45px;
+	font-size:60px;
 	color: yellow;
 	text-align: center;
 }
@@ -45,7 +45,7 @@ a{
 	text-align: center;
 	color: white;
 	display: inline-block;
-  padding: 0.5em 1em;
+  padding: 0.3em 0.6em;
   text-decoration: none;
   background: blue;/*ボタン色*/
   color: yellow;
@@ -54,22 +54,6 @@ a{
   text-align: center;
 }
 
-.button {
-	font-size:20px;
-	font-weight: bold;
-	text-align: center;
-	color: white;
-	display: inline-block;
-  padding: 0.5em 1em;
-  text-decoration: none;
-  background: #038076;/*ボタン色*/
-  color: yellow;
-  border-bottom: solid 4px #006159;/*ボタン底影*/
-  border-right: solid 5px #006159;/*ボタン右影*/
-  border-radius: 3px;
-  text-align: center;
-  margin: 40px;
-}
 
 table{
 	width: 100%;
@@ -106,7 +90,7 @@ th{
 	color: yellow;
 	width: 10%;
 	height: 50px;
-	font-size: 20px;
+	font-size: 25px;
 }
 .deletetd{
 	background: #003366;
@@ -124,7 +108,7 @@ input[type=checkbox]{
 	color: white;
 	width: 270px;
 	height: 65px;
-	font-size: 20px;
+	font-size: 25px;
 }
 
 .detailth{
@@ -152,16 +136,32 @@ input[type=checkbox]{
 }
 
 .right {
-	font-size:20px;
+	font-size: 20px !important;
 	font-weight: bold;
-	text-align: right;
+	text-align: center;
 	color: white;
 	display: inline-block;
-  padding: 0.5em 1em;
+  padding: 0.2em 0.4em;
   text-decoration: none;
   background: #5e0000;/*ボタン色*/
   color: yellow;
   border-bottom: solid 4px #3c0000;/*ボタン底影*/
   border-right: solid 5px #3c0000;/*ボタン右影*/
+  text-align: center;
+}
+.button {
+	font-size:20px;
+	font-weight: bold;
+	text-align: center;
+	color: white;
+	display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  background: #038076;/*ボタン色*/
+  color: yellow;
+  border-bottom: solid 4px #006159;/*ボタン底影*/
+  border-right: solid 5px #006159;/*ボタン右影*/
   border-radius: 3px;
+  text-align: center;
+  margin: 40px;
 }
