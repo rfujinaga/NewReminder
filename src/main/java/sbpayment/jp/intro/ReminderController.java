@@ -1,6 +1,12 @@
 package sbpayment.jp.intro;
 
-import java.util.Map;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -87,6 +91,29 @@ public String Post(String id,String s_name, String r_date, String t_period, Stri
     attr.addFlashAttribute("data",jdbc.queryForList("SELECT * from service")); 
     
     return "redirect:/list";
+}
+public class SimpleMessageSender {
+
+	private static final String postUrl = "https://slack.com/api/chat.postMessage";
+
+	public String send(String token, String channel, String text)
+			throws UnsupportedEncodingException, IOException {
+
+		byte[] postData = String.format("token=xoxp-22821387959-360716604117-383968597056-75a182173b369268ca0480f19d8c3725&channel=UALM2HS3F&text=テスト", token,
+				channel, URLEncoder.encode(text, "utf-8")).getBytes();
+
+		HttpURLConnection conn = (HttpURLConnection) new URL(postUrl).openConnection();
+		conn.setDoOutput(true);
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Content-Length", Integer.toString(postData.length));
+		try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
+			wr.write(postData);
+		}
+
+		try (Scanner s = new Scanner(conn.getInputStream())) {
+			return s.useDelimiter("\\A").hasNext() ? s.useDelimiter("\\A").next() : "";
+		}
+	}
 }
 }
 

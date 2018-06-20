@@ -29,19 +29,61 @@
 <td class="listtd"><span th:text="${service.t_period}"></span></td>
 
 
-<td class="listtd">
+<td style="background-color: #003366;" th:id="${service.s_name}">
+<b>
 <script th:inline="javascript">
 /*<![CDATA[*/
 
 var today = new Date();
 
 var period = new Date (/*[[${service.t_period}]]*/) ;
-
+var name = /*[[${service.s_name}]]*/
 var day = Math.ceil((period-today)/(60*60*24*1000));
 
-document.write("残"+day+"日");
+
+function color0(){
+	document.bgColor = "#000000"; // bgcolor：背景色
+	document.fgColor = "#FFFFFF"; // text：文字の基本色
+}
+function color1(){
+	document.bgColor = "#FF0000"; 
+	document.fgColor = "#000000"; 
+	}
+function color2(){
+	document.bgColor = "#FF8C00";
+	document.fgColor = "#000000";
+}
+function color3(){
+	document.bgColor = "#FFFF00";
+	document.fgColor = "#000000"; // text：文字の基本色
+}
+
+var message = "残"+day+"日";
+var message2 = "本日終了";
+var message3 = Math.abs(day)+"日経過"
+target = document.getElementById(name);
+if(day < 0){
+			target.style.backgroundColor="#000000";
+	   document.write(message3.fontcolor("red"));
+	}else if(day == 0){
+		target.style.backgroundColor="#FF0000";
+		document.write(message2.fontcolor("black"));
+	}else if(day < 2){
+		target.style.backgroundColor="#FF0000";
+		document.write(message.fontcolor("black"));
+	}else if(day < 4){
+		target.style.backgroundColor="#FF8C00";
+	   document.write(message.fontcolor("red"));
+	}else if(day < 8){
+		target.style.backgroundColor="#FFFF00";
+	   document.write(message.fontcolor("red"));
+	}else{
+	   document.write(message);
+	}
+
 /*]]>*/
 </script>
+</b>
 </td>
 
 
@@ -56,7 +98,7 @@ document.write("残"+day+"日");
 
 </table>
 
-  <a class="button" href = "top" >・TOPへ・</a>
+  <a class="totopbutton" href = "top" >・TOPへ・</a>
 
 </body>
 </html>

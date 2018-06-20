@@ -1,4 +1,4 @@
-body {
+/*body {
 background-color: #342F56;
 -webkit-background-size: 300px 300px;
 -moz-background-size: 300px 300px;
@@ -17,9 +17,15 @@ background-image: linear-gradient(45deg,  #322850 25%, #322850 25%, transparent 
   font-family: Meiryo UI;
   text-align: center;
 }
+*/
 
-pattern {
- 
+body{
+  background: -moz-linear-gradient(top, #8A0868, #0B0B61);
+  background: -webkit-linear-gradient(top, #8A0868, #0B0B61);
+  background: linear-gradient(to bottom, #8A0868, #0B0B61);
+  /*グラデーション以外は省略*/
+  font-family: Meiryo UI;
+  text-align: center;
 }
 
 h1 {
@@ -30,7 +36,7 @@ h1 {
 }
 
 p {
-	font-size:25px;
+	font-size:32px;
 	color: white;
 	margin-top: 50px;
 }
@@ -65,7 +71,7 @@ table{
 }
 
 div{
-	font-size: 15px;
+	font-size: 17px;
 	color: white;
 }
 
@@ -76,9 +82,6 @@ input[type="email"]{
 	width: 25%;
 }
 
-textarea{
-	wrap: hard;
-}
 th{
 	background: #038076;
 	color: yellow;
@@ -99,15 +102,12 @@ th{
 	height: 50px;
 	font-size: 50px;
 }
-input[type=checkbox]{
-	transform: scale(2.5);
-	vertical-align: middle;
-}
-.listtd{
+
+td{
 	background: #003366;
 	color: white;
 	width: 270px;
-	height: 65px;
+	height: 70px;
 	font-size: 25px;
 }
 
@@ -150,18 +150,62 @@ input[type=checkbox]{
   text-align: center;
 }
 .button {
-	font-size:20px;
+	font-size:30px;
 	font-weight: bold;
 	text-align: center;
 	color: white;
 	display: inline-block;
   padding: 0.5em 1em;
   text-decoration: none;
-  background: #038076;/*ボタン色*/
+   background: #4000FF;/*ボタン色*/
   color: yellow;
-  border-bottom: solid 4px #006159;/*ボタン底影*/
-  border-right: solid 5px #006159;/*ボタン右影*/
+  border-bottom: solid 4px #210B61;/*ボタン底影*/
+  border-right: solid 5px #210B61;/*ボタン右影*/
   border-radius: 3px;
   text-align: center;
   margin: 40px;
+}
+
+.topbutton{
+	font-size:30px;
+	font-weight: bold;
+	text-align: center;
+	color: white;
+	display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  background: #4000FF;/*ボタン色*/
+  color: yellow;
+  border-bottom: solid 4px #210B61;/*ボタン底影*/
+  border-right: solid 5px #210B61;/*ボタン右影*/
+  border-radius: 3px;
+  text-align: center;
+  margin: 40px;
+}
+
+.totopbutton {
+	font-size:30px;
+	font-weight: bold;
+	text-align: center;
+	color: white;
+	display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  background: #4000FF;/*ボタン色*/
+  color: yellow;
+  border-bottom: solid 4px #210B61;/*ボタン底影*/
+  border-right: solid 5px #210B61;/*ボタン右影*/
+  border-radius: 3px;
+  text-align: center;
+  margin: 40px;
+}
+
+input[type=radio] {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+.trial{
+	font-family: Century;
+	font-size: 80px;
 }

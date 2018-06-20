@@ -30,17 +30,17 @@
   
 	<p>カードブランド</p>
   <div>
-  <input name="card_bra" type="radio" value="VISA"> VISA
-	<input name="card_bra" type="radio" value="Master Card"> Master Card
-	<input name="card_bra" type="radio" value="JCB"> JCB<br>
-	<input name="card_bra" type="radio" value="American Express"> American Express
-	<input name="card_bra" type="radio" value="Diners Club"> Diners Club 
-	<input name="card_bra" type="radio" value="DISCOVER"> DISCOVER
-	<input name="card_bra" type="radio" value="銀聯"> 銀聯
+  <input class="card_bra" name="card_bra" type="radio" value="VISA"> VISA
+	<input class="card_bra" name="card_bra" type="radio" value="Master Card"> Master Card
+	<input class="card_bra" name="card_bra" type="radio" value="JCB"> JCB<br>
+	<input class="card_bra" name="card_bra" type="radio" value="American Express"> American Express
+	<input class="card_bra" name="card_bra" type="radio" value="Diners Club"> Diners Club 
+	<input class="card_bra" name="card_bra" type="radio" value="DISCOVER"> DISCOVER
+	<input class="card_bra" name="card_bra" type="radio" value="銀聯"> 銀聯
 	</div>
 	
   <p>カード番号(半角16桁)</p>
-	<input type="text" name="card_num" maxlength="16" placeholder="カード番号"></input><br>
+	<input type="text" name="card_num" maxlength="16" placeholder="カード番号" pattern="^([a-zA-Z0-9]{16})$"></input><br>
   
   <p>ID(別途設定した場合)</p>
 	<input type="text" name="s_id" maxlength="20" placeholder="ID"></input><br>
