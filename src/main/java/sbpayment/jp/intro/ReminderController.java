@@ -1,12 +1,8 @@
 package sbpayment.jp.intro;
 
-import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,11 +13,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ullink.slack.simpleslackapi.SlackChannel;
+import com.ullink.slack.simpleslackapi.SlackSession;
+import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
+
 @Controller
 public class ReminderController {
 	
 @GetMapping("/top")
 public String top(Model model) {
+	
+	
+	try {
+		sendMessage();
+	} catch (IOException e) {
+		// TODO 自動生成された catch ブロック
+		e.printStackTrace();
+	}
+	
+	
+	
 	return "top";
 }
 
@@ -60,16 +71,6 @@ public String delete(String id, RedirectAttributes attr) {
 	return "redirect:/list";
 }
 
-
-
-
-
-//@PostMapping("/list")
-//public String deleteGet(@RequestParam("id") String id,RedirectAttributes attr) {
-//    jdbc.update("DELETE FROM service WHERE id = ?", id);
-//    return "redirect:/list";
-//}
-
 @Autowired
 private JdbcTemplate jdbc;
 
@@ -92,31 +93,79 @@ public String Post(String id,String s_name, String r_date, String t_period, Stri
     
     return "redirect:/list";
 }
-public class SimpleMessageSender {
+public void sendMessage() throws IOException {
+File file = new File("/Users/rfujinaga/Desktop/slack_tk.txt");
+String token = "";
+if(file.exists()) {
 
-	private static final String postUrl = "https://slack.com/api/chat.postMessage";
+FileReader filereader = new FileReader(file);
 
-	public String send(String token, String channel, String text)
-			throws UnsupportedEncodingException, IOException {
-
-		byte[] postData = String.format("token=xoxp-22821387959-360716604117-383968597056-75a182173b369268ca0480f19d8c3725&channel=UALM2HS3F&text=テスト", token,
-				channel, URLEncoder.encode(text, "utf-8")).getBytes();
-
-		HttpURLConnection conn = (HttpURLConnection) new URL(postUrl).openConnection();
-		conn.setDoOutput(true);
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Content-Length", Integer.toString(postData.length));
-		try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
-			wr.write(postData);
-		}
-
-		try (Scanner s = new Scanner(conn.getInputStream())) {
-			return s.useDelimiter("\\A").hasNext() ? s.useDelimiter("\\A").next() : "";
-		}
-	}
+int data;
+while((data = filereader.read()) != -1) {
+System.out.print((char) data);
+token = token + String.valueOf((char)data);
 }
+filereader.close();
 }
 
+SlackSession session =
+SlackSessionFactory.createWebSocketSlackSession(token);
+System.out.println(token);
+session.connect();
+
+SlackChannel channel = session.findChannelByName("fy18-sys-training");
+String message = "・・・の無料期間が明日終了します。";
+session.sendMessage(channel, message);
+
+session.disconnect();
+
+}
+//public static void main(String[] args) throws IOException {
+//
+//    // BotのAPI Tokenを設定
+//    SlackSession session = SlackSessionFactory.createWebSocketSlackSession("トークン");
+//    System.out.println(session);
+//    session.connect();
+//
+//    SlackChannel channel = session.findChannelByName("fy18-sys-training");
+//    String message = "Javaからの送信テスト　藤永";
+//    session.sendMessage(channel, message);
+//
+//    session.disconnect();
+//
+//  }
 
 
+// public static void main(String[] args) {
+// try {
+// //Fileクラスに読み込むファイルを指定する
+// File file = new File("/Users/rfujinaga/Desktop/slack_tk.txt");
+//
+// //ファイルが存在するか確認する
+// if(file.exists()) {
+//
+// //FileReaderクラスのオブジェクトを生成する
+// FileReader filereader = new FileReader(file);
+//
+// //filereaderクラスのreadメソッドでファイルを1文字ずつ読み込む
+// int data;
+// while((data = filereader.read()) != -1) {
+// System.out.print((char) data);
+//
+// }
+//
+// //ファイルクローズ
+// filereader.close();
+//
+// } else {
+// System.out.print("ファイルは存在しません");
+// }
+// } catch (IOException e) {
+// e.printStackTrace();
+// }
+// }
+// }
 
+// slackでメッセージを投げる
+
+}
