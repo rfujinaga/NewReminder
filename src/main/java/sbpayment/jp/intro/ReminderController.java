@@ -3,6 +3,10 @@ package sbpayment.jp.intro;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,18 +27,30 @@ public class ReminderController {
 @GetMapping("/top")
 public String top(Model model) {
 	
+	Map<String, Object> difference = jdbc.queryForList("SELECT DateDiff(day,getdate(),t_period)FROM service").get(0);
+	int dif = Integer.valueOf(difference.toString());
+	List<Integer> datelist = new ArrayList<>();
 	
-	try {
-		sendMessage();
-	} catch (IOException e) {
-		// TODO 自動生成された catch ブロック
-		e.printStackTrace();
+	datelist.add(dif);
+
+	System.out.println("datelist"+ datelist);
+	if(Arrays.asList(datelist).contains(0)) {
+		try {
+			sendMessage2();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}else if(Arrays.asList(datelist).contains(1)) {
+		try {
+			sendMessage1();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}else {
 	}
-	
-	
-	
 	return "top";
 }
+
 
 @GetMapping("/new")
 public String registration(Model model) {
@@ -93,7 +109,10 @@ public String Post(String id,String s_name, String r_date, String t_period, Stri
     
     return "redirect:/list";
 }
-public void sendMessage() throws IOException {
+
+//期間終了日前日メッセージ送信メソッド
+//外部ファイルからトークンを読み込む
+public void sendMessage1() throws IOException {
 File file = new File("/Users/rfujinaga/Desktop/slack_tk.txt");
 String token = "";
 if(file.exists()) {
@@ -107,65 +126,44 @@ token = token + String.valueOf((char)data);
 }
 filereader.close();
 }
-
+//以降Slackでメッセージを送る
 SlackSession session =
 SlackSessionFactory.createWebSocketSlackSession(token);
 System.out.println(token);
 session.connect();
 
 SlackChannel channel = session.findChannelByName("fy18-sys-training");
-String message = "・・・の無料期間が明日終了します。";
+String message = "明日無料期間が終了するサービスがあります。解約するなら忘れずに！";
 session.sendMessage(channel, message);
 
 session.disconnect();
-
 }
-//public static void main(String[] args) throws IOException {
-//
-//    // BotのAPI Tokenを設定
-//    SlackSession session = SlackSessionFactory.createWebSocketSlackSession("トークン");
-//    System.out.println(session);
-//    session.connect();
-//
-//    SlackChannel channel = session.findChannelByName("fy18-sys-training");
-//    String message = "Javaからの送信テスト　藤永";
-//    session.sendMessage(channel, message);
-//
-//    session.disconnect();
-//
-//  }
 
+//期間終了日当日メッセージ送信メソッド
+public void sendMessage2() throws IOException {
+File file = new File("/Users/rfujinaga/Desktop/slack_tk.txt");
+String token = "";
+if(file.exists()) {
 
-// public static void main(String[] args) {
-// try {
-// //Fileクラスに読み込むファイルを指定する
-// File file = new File("/Users/rfujinaga/Desktop/slack_tk.txt");
-//
-// //ファイルが存在するか確認する
-// if(file.exists()) {
-//
-// //FileReaderクラスのオブジェクトを生成する
-// FileReader filereader = new FileReader(file);
-//
-// //filereaderクラスのreadメソッドでファイルを1文字ずつ読み込む
-// int data;
-// while((data = filereader.read()) != -1) {
-// System.out.print((char) data);
-//
-// }
-//
-// //ファイルクローズ
-// filereader.close();
-//
-// } else {
-// System.out.print("ファイルは存在しません");
-// }
-// } catch (IOException e) {
-// e.printStackTrace();
-// }
-// }
-// }
+FileReader filereader = new FileReader(file);
 
-// slackでメッセージを投げる
+int data;
+while((data = filereader.read()) != -1) {
+System.out.print((char) data);
+token = token + String.valueOf((char)data);
+}
+filereader.close();
+}
+//以降Slackでメッセージを送る
+SlackSession session =
+SlackSessionFactory.createWebSocketSlackSession(token);
+System.out.println(token);
+session.connect();
 
+SlackChannel channel = session.findChannelByName("fy18-sys-training");
+String message = "本日が無料期間終了日のサービスがあります。解約するなら忘れずに！";
+session.sendMessage(channel, message);
+
+session.disconnect();
+}
 }
